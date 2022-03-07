@@ -1,0 +1,8 @@
+CREATE TABLE public."unit"
+    (
+ id serial,
+ title character varying(254) COLLATE pg_catalog."default" ,
+ parent_id int,
+   CONSTRAINT unitss_pkey PRIMARY KEY (id)
+    )
+    INHERITS (public.tbl_base)

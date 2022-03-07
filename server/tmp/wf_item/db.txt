@@ -1,0 +1,11 @@
+CREATE TABLE public."wf_item"
+    (
+ id serial,
+ title character varying(254) COLLATE pg_catalog."default" ,
+ wf_type_id int,
+ reciver_id_id int,
+ file_attachment character varying(254) COLLATE pg_catalog."default" ,
+ description text ,
+   CONSTRAINT wf_items_pkey PRIMARY KEY (id)
+    )
+    INHERITS (public.tbl_base)

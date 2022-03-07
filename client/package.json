@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@pathofdev/react-tag-input": "^1.0.7",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.5.0",
@@ -33,9 +32,10 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "set PORT=3101 && react-scripts start",
+    "start": "cross-env PORT=3101 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "format": "prettier -w **/*.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -55,5 +55,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "prettier": "^2.5.1"
   }
 }

@@ -2,6 +2,7 @@ const pool = require('../db/pool');
 const express = require('express');
 const router = express.Router();
 const func = require('../functions/index');
+
 const name = "task";
 
 router.get(`/`, function (req, res) {
@@ -18,6 +19,7 @@ router.get(`/`, function (req, res) {
             return res.send({ type: "Error", message: err.message })
         });
 });
+
 router.get(`/:key`, function (req, res) {
     let query = `SELECT * FROM ${name} where id = ${req.params.key} `;
 
@@ -28,6 +30,7 @@ router.get(`/:key`, function (req, res) {
             return res.send({ type: "Error", message: err.message })
         });
 });
+
 router.post('/', function (req, res) {
     let data = req.body;
     
@@ -43,6 +46,7 @@ router.post('/', function (req, res) {
     });
 
 });
+
 router.put('/:id', function (req, res) {
     let data = JSON.parse(req.body.data);
     let files = req.files;
@@ -57,6 +61,7 @@ router.put('/:id', function (req, res) {
         return res.send({ type: "Error", message: err.message })
     });
 });
+
 router.delete('/:id', function (req, res) {
     let query = `delete from ${name} WHERE  id=${req.params.id};    `;
     //    console.log(query);
@@ -68,4 +73,5 @@ router.delete('/:id', function (req, res) {
             return res.send({ type: "Error", message: err.message })
         });
 });
+
 module.exports = router;

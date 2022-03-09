@@ -24,6 +24,43 @@ import "./assets/css/custom.css";
 
 import PrivateRoute from "./components/PrivateRoute";
 
+const TopMenu = () => (
+  <div className="top-menu-parent">
+    <div className="top-menu">
+      <ul>
+        <li>
+          <Link to="/">
+            <span>کارتابل</span>{" "}
+          </Link>
+        </li>
+        <li>
+          <Link to="/wfitem">
+            <span>ایجاد گردش کار</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/report1">
+            <span>گزارش گردش کار</span>
+          </Link>
+        </li>
+        <li>
+          <span>گزارش پیشرفت</span>
+        </li>
+        <li>
+          <Link to="/unit">
+            <span>واحد ها</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/user">
+            <span>مدیریت کاربران</span>
+          </Link>
+        </li>
+      </ul>
+    </div>
+  </div>
+);
+
 function App() {
   const [currentUser, setCurrentUser] = useState({});
 
@@ -51,8 +88,8 @@ function App() {
     const user = localStorage.getItem("user")
       ? JSON.parse(localStorage.getItem("user"))
       : undefined;
+
     if (user) {
-      debugger;
       setCurrentUser({
         name: user.name,
         lastLoginDate: user.last_login,
@@ -107,40 +144,7 @@ function App() {
               </div>
             </div>
           </nav>
-          <div className="top-menu-parent">
-            <div className="top-menu">
-              <ul>
-                <li>
-                  <Link to="/">
-                    <span>کارتابل</span>{" "}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/wfitem">
-                    <span>ایجاد گردش کار</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/report1">
-                    <span>گزارش گردش کار</span>
-                  </Link>
-                </li>
-                <li>
-                  <span>گزارش پیشرفت</span>
-                </li>
-                <li>
-                  <Link to="/unit">
-                    <span>واحد ها</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/user">
-                    <span>مدیریت کاربران</span>
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <TopMenu />
           <div className="header bg-light pb-6">
             <Switch>
               <PrivateRoute path="/user" component={User} role={0} />

@@ -1,21 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
-import { getItems, insertItem, deleteItem, updateItem } from "../../api/index";
-import TableContainer from "../../components/TableContainer";
-import { columns, entityName } from "./statics";
 import { message, Select } from "antd";
-//import DatePicker from 'react-datepicker2';
-//import moment from 'moment-jalaali';
-import * as Static from "../static";
+import React, { useEffect, useRef, useState } from "react";
 
-const Unit = (props) => {
-  const BoxRef = useRef(null),
-    GridRef = useRef(null);
+import { columns, entityName } from "./statics";
+import { deleteItem, getItems, insertItem, updateItem } from "../../api/index";
+import * as Static from "../static";
+import TableContainer from "../../components/TableContainer";
+
+const Unit = () => {
+  const GridRef = useRef(null);
 
   const [data, setData] = useState([]);
   const [errors, setErrors] = useState({});
   const [obj, setObj] = useState({});
   const [mode, setMode] = useState("");
-  const [permission_id, setPermission_id] = useState(5);
+  const [permission_id] = useState(5);
   const [parent_options, setParent_options] = useState([]);
 
   const getData = () => {
@@ -26,7 +24,7 @@ const Unit = (props) => {
       setParent_options(
         response[0].data.map((a) => {
           return { ...a, key: a.id, label: a.title, value: a.id };
-        })
+        }),
       );
     });
     setObj({});
@@ -45,9 +43,9 @@ const Unit = (props) => {
     columns
       .filter((a) => a.req)
       .forEach((a) => {
-        if (a.type === "lookup")
+        if (a.type === "lookup") {
           err[a.accessor + "_id"] = obj[a.accessor + "_id"] ? false : true;
-        else err[a.accessor] = obj[a.accessor] ? false : true;
+        } else err[a.accessor] = obj[a.accessor] ? false : true;
       });
 
     if (Object.values(err).filter((a) => a).length > 0) {
@@ -92,11 +90,13 @@ const Unit = (props) => {
       }
     }
   };
+
   const deleteBtnClick = (item) => {
-    deleteItem(item.id, entityName).then((a) => {
+    deleteItem(item.id, entityName).then(() => {
       getData();
     });
   };
+
   const displayBtnClick = (item) => {
     setMode("display");
     // BoxRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -179,16 +179,13 @@ const Unit = (props) => {
                         <label className="req-label">*</label>
                         <input
                           id="title"
-                          className={
-                            errors.title
-                              ? "form-control error-control"
-                              : "form-control"
-                          }
+                          className={errors.title
+                            ? "form-control error-control"
+                            : "form-control"}
                           type="text"
                           value={obj.title}
                           onChange={(e) =>
-                            setObj({ ...obj, title: e.target.value })
-                          }
+                            setObj({ ...obj, title: e.target.value })}
                           disabled={mode === "display"}
                         />
                       </div>
@@ -201,18 +198,15 @@ const Unit = (props) => {
 
                         <Select
                           id="parent"
-                          className={
-                            errors.parent_id
-                              ? "form-control error-control"
-                              : "form-control"
-                          }
+                          className={errors.parent_id
+                            ? "form-control error-control"
+                            : "form-control"}
                           {...Static.selectDefaultProp}
                           disabled={mode === "display"}
                           options={parent_options}
                           value={obj.parent_id}
                           onSelect={(values) =>
-                            setObj({ ...obj, parent_id: values })
-                          }
+                            setObj({ ...obj, parent_id: values })}
                         />
                       </div>
                     </div>

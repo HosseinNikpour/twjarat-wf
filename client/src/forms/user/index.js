@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
+import { message, Select } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+
+import { columns, entityName, role_options } from "./statics";
 import {
+  deleteItem,
   getItems,
   insertItem,
-  deleteItem,
   updateItem,
   updatePassword,
 } from "../../api/index";
-import TableContainer from "../../components/TableContainer";
-import { columns, entityName, role_options } from "./statics";
-import { message, Select } from "antd";
 import * as Static from "../static";
+import TableContainer from "../../components/TableContainer";
 
 const User = (props) => {
-  const BoxRef = useRef(null),
-    GridRef = useRef(null);
+  const GridRef = useRef(null);
 
   const [data, setData] = useState([]);
   const [obj, setObj] = useState({});
@@ -31,7 +31,7 @@ const User = (props) => {
       setUnit_options(
         response[1].data.map((a) => {
           return { key: a.id, label: a.title, value: a.id };
-        })
+        }),
       );
       setObj({});
       setErrors({});
@@ -50,9 +50,9 @@ const User = (props) => {
     columns
       .filter((a) => a.req)
       .forEach((a) => {
-        if (a.type === "lookup")
+        if (a.type === "lookup") {
           err[a.accessor + "_id"] = obj[a.accessor + "_id"] ? false : true;
-        else err[a.accessor] = obj[a.accessor] ? false : true;
+        } else err[a.accessor] = obj[a.accessor] ? false : true;
       });
 
     if (Object.values(err).filter((a) => a).length > 0) {
@@ -195,18 +195,15 @@ const User = (props) => {
                         <label className="form-control-label">
                           نام و نام خانوادگی
                         </label>
-                        <label className="req-label"> *</label>
+                        <label className="req-label">*</label>
                         <input
-                          className={
-                            errors.name
-                              ? "form-control error-control"
-                              : "form-control"
-                          }
+                          className={errors.name
+                            ? "form-control error-control"
+                            : "form-control"}
                           type="text"
                           value={obj.name}
                           onChange={(e) =>
-                            setObj({ ...obj, name: e.target.value })
-                          }
+                            setObj({ ...obj, name: e.target.value })}
                           disabled={mode === "display"}
                         />
                       </div>
@@ -214,18 +211,15 @@ const User = (props) => {
                     <div className="col-4">
                       <div className="form-group">
                         <label className="form-control-label">نام کاربری</label>
-                        <label className="req-label"> *</label>
+                        <label className="req-label">*</label>
                         <input
-                          className={
-                            errors.username
-                              ? "form-control error-control"
-                              : "form-control"
-                          }
+                          className={errors.username
+                            ? "form-control error-control"
+                            : "form-control"}
                           type="text"
                           value={obj.username}
                           onChange={(e) =>
-                            setObj({ ...obj, username: e.target.value })
-                          }
+                            setObj({ ...obj, username: e.target.value })}
                           disabled={mode === "display"}
                         />
                       </div>
@@ -239,8 +233,7 @@ const User = (props) => {
                             type="checkbox"
                             checked={obj.enabled}
                             onChange={(e) =>
-                              setObj({ ...obj, enabled: !obj.enabled })
-                            }
+                              setObj({ ...obj, enabled: !obj.enabled })}
                             disabled={mode === "display"}
                           />
                         </div>
@@ -273,8 +266,7 @@ const User = (props) => {
                             type="text"
                             value={obj.password}
                             onChange={(e) =>
-                              setObj({ ...obj, password: e.target.value })
-                            }
+                              setObj({ ...obj, password: e.target.value })}
                             disabled={mode === "display" && !chp}
                           />
                         </div>
@@ -288,18 +280,15 @@ const User = (props) => {
                           مدیریت/ اداره/ واحد{" "}
                         </label>
                         <Select
-                          className={
-                            errors.unit_id
-                              ? "form-control error-control"
-                              : "form-control"
-                          }
+                          className={errors.unit_id
+                            ? "form-control error-control"
+                            : "form-control"}
                           {...Static.selectDefaultProp}
                           disabled={mode === "display"}
                           options={unit_options}
                           value={obj.unit_id}
                           onSelect={(values) =>
-                            setObj({ ...obj, unit_id: values })
-                          }
+                            setObj({ ...obj, unit_id: values })}
                         />
                       </div>
                     </div>
@@ -308,18 +297,15 @@ const User = (props) => {
                       <div className="form-group">
                         <label className="form-control-label">نقش</label>
                         <Select
-                          className={
-                            errors.role_id
-                              ? "form-control error-control"
-                              : "form-control"
-                          }
+                          className={errors.role_id
+                            ? "form-control error-control"
+                            : "form-control"}
                           {...Static.selectDefaultProp}
                           disabled={mode === "display"}
                           options={role_options}
                           value={obj.role_id}
                           onSelect={(values) =>
-                            setObj({ ...obj, role_id: values })
-                          }
+                            setObj({ ...obj, role_id: values })}
                         />
                       </div>
                     </div>

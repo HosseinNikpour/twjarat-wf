@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
-import { getItems, insertItem, deleteItem, updateItem } from "../../api/index";
-import TableContainer from "../../components/TableContainer";
-import { columns, entityName } from "./statics";
-import { message, Select } from "antd";
-//import DatePicker from 'react-datepicker2';
+import { Select } from "antd";
+import React, { useEffect, useRef, useState } from "react";
 import moment from "moment-jalaali";
+
+import { columns, entityName } from "./statics";
+import { getItems } from "../../api/index";
 import * as Static from "../static";
+import TableContainer from "../../components/TableContainer";
 
 const Cardboard = (props) => {
   const BoxRef = useRef(null),
@@ -15,7 +15,6 @@ const Cardboard = (props) => {
   const [errors, setErrors] = useState({});
   const [obj, setObj] = useState({});
   const [mode, setMode] = useState("");
-  const [permission_id, setPermission_id] = useState(5);
   const [status_options, setStatus_options] = useState([]);
   const [tableDate, setTableDate] = useState([]);
   const [unit, setUnit] = useState([]);
@@ -48,7 +47,7 @@ const Cardboard = (props) => {
     setMode("edit");
     BoxRef.current.scrollIntoView({ behavior: "smooth" });
     setObj(item);
-    let xx = unit.filter((a) => a.parent_id == item.reciver_id);
+    let xx = unit.filter((a) => a.parent_id === item.reciver_id);
     let dt = [];
     xx.forEach((a) => {
       dt.push({ reciver_id: a.id, reciver_name: a.title });
@@ -139,9 +138,9 @@ const Cardboard = (props) => {
                 data={data}
                 //  scroll={{ y: 500, x: 500 }}
                 displayClick={displayBtnClick}
-                //  deleteClick={permission_id > 3 ? deleteBtnClick : undefined}
-                //  editClick={permission_id > 2 ? editBtnClick : undefined}
-              />
+              />{" "}
+              {/* deleteClick={permission_id > 3 ? deleteBtnClick : undefined} */}
+              {/* editClick={permission_id > 2 ? editBtnClick : undefined} */}
             </div>
           </div>
         </div>
@@ -154,7 +153,7 @@ const Cardboard = (props) => {
               <div className="card-header border-0">
                 <div className="row align-items-center">
                   <div className="col">
-                    <h3 className="mb-0"> {obj.title}</h3>
+                    <h3 className="mb-0">{obj.title}</h3>
                     <hr></hr>
                   </div>
                 </div>
@@ -243,7 +242,7 @@ const Cardboard = (props) => {
                       />
                     </div>
                   </div>
-                  {obj.status_id == 1 && (
+                  {obj.status_id === 1 && (
                     <div className="row">
                       <div className="col">
                         <table

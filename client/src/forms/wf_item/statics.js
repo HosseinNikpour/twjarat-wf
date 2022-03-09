@@ -31,7 +31,8 @@ export const columns = [
   {
     Header: "نوع گردش کار",
     accessor: "wf_type_id",
-    render: (text, row) => (text) ? wf_type_options.find(a=>a.key==text).label : '',
+    render: (text, row) =>
+      (text) ? wf_type_options.find((a) => a.key === text).label : "",
   },
   {
     Header: "ارجاع به",
@@ -43,15 +44,20 @@ export const columns = [
     accessor: "file_attachment",
     type: "file",
     notInGrid: true,
-   // req: true,
+    // req: true,
   },
   {
-    Header: '',
-    accessor: 'id',
-    width: '50px',
-    render: (text) => <a rel="noreferrer" target="_blank" href={'http://localhost:3101/report2?id=' + text}>
-      <i className="fas fa-chart-line" title='گزارش'></i>
-    </a>
+    Header: "",
+    accessor: "id",
+    width: "50px",
+    render: (text) =>
+      <a
+        rel="noreferrer"
+        target="_blank"
+        href={"http://localhost:3101/report2?id=" + text}
+      >
+        <i className="fas fa-chart-line" title="گزارش"></i>
+      </a>,
   },
   {
     Header: "توضیحات",
@@ -61,18 +67,18 @@ export const columns = [
   },
 ];
 
+export const entityName = "wf_item";
+export const pageHeader = " گردش کار";
 
-export const entityName = 'wf_item';
-export const pageHeader = ' گردش کار';
+export const wf_type_options = [
+  { label: "تهیه وضعیت فعلی نواحی ، مناطق و شعب", value: 1, key: 1 },
+  { label: "دریافت درافت اولیه خوداظهاری اهداف", value: 2, key: 2 },
+  { label: "تهیه فایل مشتریان بالقوه در هر لاین کسب کاری", value: 3, key: 3 },
+  { label: "آموزش ", value: 4, key: 4 },
+];
 
-export const wf_type_options=[{ label: 'تهیه وضعیت فعلی نواحی ، مناطق و شعب', value: 1, key: 1 },
-{ label: 'دریافت درافت اولیه خوداظهاری اهداف', value: 2, key: 2 },
-{ label: 'تهیه فایل مشتریان بالقوه در هر لاین کسب کاری', value: 3, key: 3 },
-{ label: 'آموزش ', value: 4, key: 4 },
-]
-
-export const reciver_options=[{ label: 'مدیر امور استان های شمال کشور', value: 1, key: 1 },
-{ label: 'مدیر امور استان های مرکز کشور', value: 2, key: 2 },
-{ label: 'مدیر امور استان های جنوب کشور', value: 3, key: 3 },
-
-]
+export const reciver_options = [
+  { label: "مدیر امور استان های شمال کشور", value: 1, key: 1 },
+  { label: "مدیر امور استان های مرکز کشور", value: 2, key: 2 },
+  { label: "مدیر امور استان های جنوب کشور", value: 3, key: 3 },
+];

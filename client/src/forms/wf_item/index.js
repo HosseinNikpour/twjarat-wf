@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
-import { getItems, insertItem, deleteItem, updateItem } from "../../api/index";
-import TableContainer from "../../components/TableContainer";
-import { columns, entityName, wf_type_options } from "./statics";
 import { message, Select } from "antd";
-//import DatePicker from 'react-datepicker2';
-//import moment from 'moment-jalaali';
+import React, { useEffect, useRef, useState, useCallback } from "react";
+
+import { columns, entityName, wf_type_options } from "./statics";
+import { deleteItem, getItems, insertItem, updateItem } from "../../api/index";
 import * as Static from "../static";
+import TableContainer from "../../components/TableContainer";
 
 const WfItem = (props) => {
   const BoxRef = useRef(null),
@@ -15,13 +14,15 @@ const WfItem = (props) => {
   const [errors, setErrors] = useState({});
   const [obj, setObj] = useState({});
   const [mode, setMode] = useState("");
-  const [permission_id, setPermission_id] = useState(2);
+  const [
+    permission_id, // , setPermission_id
+  ] = useState(2);
   const unit_id = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")).unit_id
     : undefined;
   const [reciver_options, setReciver_options] = useState([]);
 
-  const getData = () => {
+  const getData = useCallback(() => {
     setMode("");
     GridRef.current.scrollIntoView({ behavior: "smooth" });
     Promise.all([
@@ -36,10 +37,11 @@ const WfItem = (props) => {
       );
     });
     setObj({});
-  };
+  }, [unit_id]);
+
   useEffect(() => {
     getData();
-  }, []);
+  }, [getData]);
 
   const btnNewClick = () => {
     setMode("new");
@@ -50,9 +52,9 @@ const WfItem = (props) => {
     columns
       .filter((a) => a.req)
       .forEach((a) => {
-        if (a.type === "lookup")
+        if (a.type === "lookup") {
           err[a.accessor + "_id"] = obj[a.accessor + "_id"] ? false : true;
-        else err[a.accessor] = obj[a.accessor] ? false : true;
+        } else err[a.accessor] = obj[a.accessor] ? false : true;
       });
 
     if (Object.values(err).filter((a) => a).length > 0) {
@@ -61,8 +63,9 @@ const WfItem = (props) => {
       alert("لطفا موارد الزامی را وارد کنید");
     } else {
       var formData = new FormData();
-      if (obj.f_file_attachment)
+      if (obj.f_file_attachment) {
         formData.append("file_attachment", obj.f_file_attachment);
+      }
       formData.append("data", JSON.stringify(obj));
       if (mode === "new") {
         insertItem(formData, entityName, "multipart/form-data")

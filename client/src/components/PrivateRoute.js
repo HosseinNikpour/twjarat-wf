@@ -1,46 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { verifyToken } from '../api/index'
+import { verifyToken } from "../api/index";
+
+const Loading = 'loading';
+const LoggedOut = 'loggedout';
+const LoggedIn = 'loggedIn';
 
 const PrivateRoute = (props) => {
-    const [authenticated, setAuthenticated] = useState(0);
+  const [authenticated, setAuthenticated] = useState(Loading);
 
-    useEffect(() => {
+  useEffect(() => {
+    const user = localStorage.getItem("user")
+        ? JSON.parse(localStorage.getItem("user"))
+        : undefined,
+      token = localStorage.getItem("token")
+        ? localStorage.getItem("token")
+        : undefined;
 
+    if (!user || !token) {
+      setAuthenticated(LoggedOut);
+    } else {
+      verifyToken({ user, token })
+        .then(() => {
+          // TODO handel permission for admin role ===>props.role=='admin'
+          // TODO check the response and then if it is  ok set state
+          if (typeof props.onLogin === "function") props.onLogin(5);
 
-        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : undefined,
-            token = localStorage.getItem('token') ? localStorage.getItem('token') : undefined;
-        if (!user || !token) {
-            setAuthenticated(-1);
-        }
-        else {
-            verifyToken({ user, token }).then(response => {
-                //todo : handel permission for admin role ===>props.role=='admin'
-                //todo : check the response and then if it is  ok set state
-                ///    console.log(response);
-                //  console.log("user.role", user);
-                //   console.log("page.role", this.props.role);
-               // debugger;
-                if (typeof props.onLogin === 'function')
-                    props.onLogin(5);
+          if (props.role)
+            if (user.role === props.role) setAuthenticated(LoggedIn);
+            else setAuthenticated(LoggedOut);
+          else setAuthenticated(LoggedIn);
+        })
+        .catch((error) => {
+          console.log(error);
+          setAuthenticated(LoggedOut);
+        });
+    }
+  }, [props]);
 
-                if (props.role)
-                    if (user.role === props.role)
-                        setAuthenticated(1);
-                    else
-                        setAuthenticated(-1);
-                else
-                    setAuthenticated(1);
-            }).catch((error) => {
-                console.log(error);
-                setAuthenticated(-1);
-            });
-        }
-    }, [])
-    if (authenticated === -1)
-        return (<Redirect to={{ pathname: '/login', state: { from: props.location } }} />)//,message:'دسترسی لازم برای این صفحه را ندارید'
-    else if (authenticated > 0)
-        return (<Route {...props} />)
-    return (<div></div>)
-}
+  if (authenticated === LoggedOut) {
+    return (
+      <Redirect to={{ pathname: "/login", state: { from: props.location } }} />
+    );
+  } else if (authenticated === LoggedIn) return <Route {...props} />;
+
+  // Loading
+  return <div />;
+};
+
 export default PrivateRoute;

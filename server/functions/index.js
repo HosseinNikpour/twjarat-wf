@@ -130,6 +130,7 @@ const returnContractIds = (userId, token) => {
             return -5;
         });
 }
+
 module.exports = {
     saveFile,
     queryGen,

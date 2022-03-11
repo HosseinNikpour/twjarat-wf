@@ -1,28 +1,25 @@
-import React, { useState, useEffect } from "react";
+import "./assets/css/antd.rtl.css";
+import "./assets/css/argon.rtl.css";
+import "./assets/css/custom.css";
+import "./assets/fonts/IRANSans/style.css";
+import "./assets/vendor/@fortawesome/fontawesome-free/css/all.min.css";
+import "./assets/vendor/nucleo/css/nucleo.rtl.css";
+
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 
-import logo from "./assets/img/brand/tejarat.png";
-import profile from "./assets/img/brand/user.png";
-import logout from "./assets/img/brand/logout.png";
+import { OtherReports } from './reports/OtherReports';
+import Cardboard from "./forms/cardboard/index";
 import Login from "./components/login";
-
-import User from "./forms/user/index";
-
-import WfItem from "./forms/wf_item/index";
-import Unit from "./forms/unit/index";
-
+import PrivateRoute from "./components/PrivateRoute";
 import Report1 from "./reports/report1";
 import Report2 from "./reports/report2";
-import Cardboard from "./forms/cardboard/index";
-
-import "./assets/css/antd.rtl.css";
-import "./assets/vendor/nucleo/css/nucleo.rtl.css";
-import "./assets/vendor/@fortawesome/fontawesome-free/css/all.min.css";
-import "./assets/css/argon.rtl.css";
-import "./assets/fonts/IRANSans/style.css";
-import "./assets/css/custom.css";
-
-import PrivateRoute from "./components/PrivateRoute";
+import Unit from "./forms/unit/index";
+import User from "./forms/user/index";
+import WfItem from "./forms/wf_item/index";
+import logo from "./assets/img/brand/tejarat.png";
+import logout from "./assets/img/brand/logout.png";
+import profile from "./assets/img/brand/user.png";
 
 const TopMenu = () => (
   <div className="top-menu-parent">
@@ -44,7 +41,14 @@ const TopMenu = () => (
           </Link>
         </li>
         <li>
-          <span>گزارش پیشرفت</span>
+          <Link to="/report2">
+            <span>گزارش پیشرفت</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/other_reports">
+            <span>سایر گزارشها</span>
+          </Link>
         </li>
         <li>
           <Link to="/unit">
@@ -153,6 +157,7 @@ function App() {
               <PrivateRoute path="/wfitem" component={WfItem} role="" />
               <PrivateRoute path="/report1" component={Report1} role="" />
               <PrivateRoute path="/report2" component={Report2} role="" />
+              <PrivateRoute path="/other_reports" component={OtherReports} role="" />
 
               <Route path="/login">
                 <Login callback={loginCallback} />

@@ -72,13 +72,13 @@ export const deleteItem = (id, storeIndex) =>
   axios.delete(URL + "api/" + storeIndex + "/" + id, config);
 
 export const login = (data) =>
-  axios.post(URL + "api/User/signin/", data, config);
+  axios.post(URL + "api/user/signin/", data, config);
 
 export const verifyToken = (data) =>
-  axios.post(URL + "api/User/verifyToken/", data, config);
+  axios.post(URL + "api/user/verifyToken/", data, config);
 
 export const updatePassword = (data) =>
-  axios.put(URL + "api/User/updatePassword", data, config);
+  axios.put(URL + "api/user/updatePassword", data, config);
 
 export const checkPermission = (storeIndex) => {
   config.params = {

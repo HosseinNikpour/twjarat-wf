@@ -1,11 +1,11 @@
-/* eslint-disable eqeqeq */
-import React, { useState, useEffect } from "react";
-import { getItems } from "../api/index";
-//import moment from 'moment-jalaali';
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import Sankey from "highcharts/modules/sankey";
 import Organization from "highcharts/modules/organization";
+import React, { useEffect, useState } from "react";
+import Sankey from "highcharts/modules/sankey";
+
+import { getItems } from "../api/index";
+
 Sankey(Highcharts);
 
 Organization(Highcharts);
@@ -26,27 +26,26 @@ const ReportDashboard = (/*props*/) => {
         let dt1 = [],
           dt2 = [],
           dt3 = [];
-        debugger;
         c.forEach((e) => {
           dt1.push(
             data.filter((a) => a.contractor_id === e.key && a.req_type_id === 1)
-              .length
+              .length,
           );
           dt2.push(
             data.filter((a) => a.contractor_id === e.key && a.req_type_id === 2)
-              .length
+              .length,
           );
           dt3.push(
             data.filter((a) => a.contractor_id === e.key && a.req_type_id === 3)
-              .length
+              .length,
           );
         });
-        // debugger
         setObj({ dt1, dt2, dt3 });
         setContractor_options(c);
-      }
+      },
     );
   };
+
   useEffect(() => {
     getData();
   }, []);
@@ -178,9 +177,9 @@ const ReportDashboard = (/*props*/) => {
           color: "white",
           nodeFormatter: function () {
             // Call the default renderer
-            const html =
-              Highcharts.defaultOptions.plotOptions.organization.dataLabels.nodeFormatter.call(
-                this
+            const html = Highcharts.defaultOptions.plotOptions.organization
+              .dataLabels.nodeFormatter.call(
+                this,
               );
 
             const parser = new DOMParser();
@@ -191,7 +190,7 @@ const ReportDashboard = (/*props*/) => {
             // Do some modification
             newHtml = newHtml.replace(
               '<p style="',
-              '<p style="font-family: BYekan; font-size:20px'
+              '<p style="font-family: BYekan; font-size:20px',
             );
             return newHtml;
           },
